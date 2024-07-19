@@ -14,6 +14,10 @@ namespace Sales_NET8.Web
 
             builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer("name=DefaultConnection"));
 
+            builder.Services.AddTransient<SeedDb>();
+
+            builder.Services.AddScoped<IRepository, Repository>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
