@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using Sales_NET8.Web.Data;
 using static Microsoft.AspNetCore.Razor.Language.TagHelperMetadata;
 
@@ -43,7 +44,19 @@ namespace Sales_NET8.Web
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
+            RunSeeding(app);
+
             app.Run();
+        }
+
+        private static void RunSeeding(IHost host)
+        {
+            var scopeFactory = host.Services.GetService<IServiceScopeFactory>();
+            using (var scope = scopeFactory.CreateScope())
+            {
+                var seeder = scope.ServiceProvider.GetService<SeedDb>();
+                seeder.SeedAsync().Wait();
+            }
         }
     }
 }

@@ -30,12 +30,35 @@ namespace Sales_NET8.Web.Data
 
                 await _context.SaveChangesAsync();
             }
+
+            if (!_context.Categories.Any())
+
+            {
+                AddCategory("Cat. 1");
+
+                AddCategory("Cat. 2");
+
+                AddCategory("Cat. 3");
+
+                AddCategory("Cat. 4");
+
+                await _context.SaveChangesAsync();
+            }
         }
 
         private void AddCountry(string name)
 
         {
             _context.Countries.Add(new Country
+
+            {
+                Name = name
+            });
+        }
+
+        private void AddCategory(string name)
+        {
+            _context.Categories.Add(new Category
 
             {
                 Name = name
